@@ -13,7 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="data-chart-game.html">
 
 
-<dom-module id="my-view1">
+<dom-module id="my-home">
   <template>
     <style include="shared-styles">
       :host {
@@ -31,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       paper-fab {
-        position: absolute;
+        position: fixed;
         right: 20px;
         bottom: 20px;
       }
@@ -44,6 +44,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: white;
         padding: 20px;
         margin: 20px;
+      }
+
+      #placeholder #one {
+        font-size: 10em;
+      }
+
+      #placeholder #two {
+        font-size: 6em;
+      }
+
+      #placeholder {
+        color: #666666;
+
       }
     </style>
 
@@ -77,10 +90,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       <div id="charts">
-      <!--<div class="card">
-        <data-chart-game symbol="AMZN" date="April 1, 2010"initial-money="1000"></data-chart-game>
-      </div> -->
-    </div>
+
+        <div id="placeholder">
+          <center>
+            <span id="one">No timelines yet :(</span> <br>
+            <span id="two">Create one at the bottom right!</span>
+          </center>
+        </div>
+      </div>
 
 
     <paper-fab icon="add" title="create" id="newchart"></paper-fab>
@@ -92,10 +109,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
 
     Polymer({
-      is: 'my-view1',
+      is: 'my-home',
       dismissDialog: function(param) {
 
         if(param.detail.confirmed) {
+
+          if ($('#placeholder').length) {
+            $('#placeholder').remove();
+          }
 
           var sym = this.$.symbol.value.toUpperCase();
           var date = moment(this.$.picker.date).format('MMMM DD, YYYY');

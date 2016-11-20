@@ -85,6 +85,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         font-weight: bold;
       }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -100,7 +105,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-header-panel main>
           <paper-toolbar> <!-- toolbar and stuff -->
             <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-            <span class="title">My App</span>
+            <span class="title">Market Markups</span>
+            <span class="link"><a href="/info">Info</a></span>
           </paper-toolbar>
           <div> <!-- Actual page content -->
             <iron-pages
@@ -108,16 +114,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 attr-for-selected="name"
                 fallback-selection="view404"
                 role="main">
-              <my-view1 name="view1"></my-view1>
-              <my-view2 name="view2"></my-view2>
+              <my-home name="home"></my-home>
+              <my-info name="info"></my-info>
               <my-view3 name="view3"></my-view3>
               <my-view404 name="view404"></my-view404>
             </iron-pages>
           </div>
         </paper-header-panel>
-
-
-
 
     </app-drawer-layout>
   </template>
@@ -145,7 +148,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function(page) {
-        this.page = page || 'view1';
+        this.page = page || 'home';
       },
 
       _pageChanged: function(page) {

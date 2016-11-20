@@ -45,7 +45,7 @@
       <div id="graphdate">[[_formatDate(date)]]</div>
     </div>
   </div>
-    <center><span>Shares: [[numberShares]] | Money: [[totalCash]]</span></center>
+    <center><span>Shares: [[numberShares]] | Money: $[[_round(totalCash)]]</span></center>
 
     <google-chart
       type='md-line'
@@ -227,6 +227,9 @@
           this.numberShares -= amount;
           this.totalCash += (amount * price);
         }
+      },
+      _round: function(n) {
+        return Math.round(n * 100) / 100
       }
     });
 
