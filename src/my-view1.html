@@ -1,0 +1,128 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="data-chart-game.html">
+
+
+<dom-module id="my-view1">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+
+      paper-input {
+        width: 200px;
+      }
+
+      google-chart {
+        width: 100%;
+      }
+
+      paper-fab {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+      }
+
+      #longlist {
+        max-height: 200px;
+      }
+
+      .backing {
+        background-color: white;
+        padding: 20px;
+        margin: 20px;
+      }
+    </style>
+
+
+
+      <!--<paper-input label="Symbol" id="symbol"></paper-input>
+      <paper-button raised id="fetch">Submit</paper-button>
+
+      <span>on <span id="disp-date"></span></span>
+      <paper-icon-button id="calendar-button" icon="date-range"></paper-icon-button>
+
+      <paper-dialog id="calendar" class="paper-date-picker-dialog" modal
+        on-iron-overlay-closed="dismissDialog">
+        <paper-date-picker id="picker" date="January 1, 2000" force-narrow></paper-date-picker>
+        <div class="buttons">
+          <paper-button dialog-dismiss>Cancel</paper-button>
+          <paper-button dialog-confirm>OK</paper-button>
+        </div>
+      </paper-dialog> -->
+
+      <paper-dialog id="createdialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="dismissDialog">
+
+        <paper-input label="Stock Symbol" id="symbol"></paper-input>
+        <paper-date-picker id="picker" date="January 1, 2000"  min-date="June 1, 1998" max-date="December 31, 2012" force-narrow></paper-date-picker>
+
+        <div class="buttons">
+          <paper-button dialog-dismiss>Cancel</paper-button>
+          <paper-button dialog-confirm>OK</paper-button>
+        </div>
+      </paper-dialog>
+
+
+      <div id="charts">
+      <!--<div class="card">
+        <data-chart-game symbol="AMZN" date="April 1, 2010"initial-money="1000"></data-chart-game>
+      </div> -->
+    </div>
+
+
+    <paper-fab icon="add" title="create" id="newchart"></paper-fab>
+
+
+
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'my-view1',
+      dismissDialog: function(param) {
+
+        if(param.detail.confirmed) {
+
+          var sym = this.$.symbol.value.toUpperCase();
+          var date = moment(this.$.picker.date).format('MMMM DD, YYYY');
+
+          var timestamp = new Date().getUTCMilliseconds();
+          var UID = ('ID' + timestamp);
+
+
+          $('#charts').append(
+            '<paper-material elevation="2">' +
+              '<data-chart-game symbol="' + sym + '" date="' + date + '"></data-chart-game>' +
+            '</paper-material>'
+          );
+
+          $('paper-material').addClass('backing');
+          $('paper-material').css({'background-color': 'white', 'padding': '20px', 'margin':'10px'});
+
+        }
+      },
+      ready: function() {
+        this.listen(this.$.newchart, 'tap', '_tapfab')
+      },
+      _tapfab: function() {
+        this.$.createdialog.open();
+      }
+    });
+
+
+  </script>
+</dom-module>
